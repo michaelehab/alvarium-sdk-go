@@ -50,7 +50,7 @@ func (a *TlsAnnotator) Do(ctx context.Context, data []byte) (contracts.Annotatio
 			isSatisfied = tls.HandshakeComplete
 		}
 	}
-	annotation := contracts.NewAnnotation(key, a.hash, hostname, tag, a.kind, isSatisfied)
+	annotation := contracts.NewAnnotation(key, a.hash, hostname, tag, contracts.AnnotationTLSLayer, a.kind, isSatisfied)
 	sig, err := SignAnnotation(a.sign.PrivateKey, annotation)
 	if err != nil {
 		return contracts.Annotation{}, err

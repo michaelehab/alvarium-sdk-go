@@ -42,7 +42,7 @@ func (a *SourceAnnotator) Do(ctx context.Context, data []byte) (contracts.Annota
 	hostname, _ := os.Hostname()
 	tag := os.Getenv(contracts.TagEnvKey)
 
-	annotation := contracts.NewAnnotation(key, a.hash, hostname, tag, a.kind, true)
+	annotation := contracts.NewAnnotation(key, a.hash, hostname, tag, contracts.AnnotationSourceLayer, a.kind, true)
 	sig, err := SignAnnotation(a.sign.PrivateKey, annotation)
 	if err != nil {
 		return contracts.Annotation{}, err

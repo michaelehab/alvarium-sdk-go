@@ -30,6 +30,7 @@ type Annotation struct {
 	Hash        HashType       `json:"hash,omitempty"`      // Hash identifies which algorithm was used to construct the hash
 	Host        string         `json:"host,omitempty"`      // Host is the hostname of the node making the annotation
 	Tag         string         `json:"tag,omitempty"`       // Tag is the link between the current layer and the below layer
+	Layer       string         `json:"layer,omitempty"`     // Layer is the layer where the annotation was produced
 	Kind        AnnotationType `json:"kind,omitempty"`      // Kind indicates what kind of annotation this is
 	Signature   string         `json:"signature,omitempty"` // Signature contains the signature of the party making the annotation
 	IsSatisfied bool           `json:"isSatisfied"`         // IsSatisfied indicates whether the criteria defining the annotation were fulfilled
@@ -42,13 +43,14 @@ type AnnotationList struct {
 }
 
 // NewAnnotation is the constructor for an Annotation instance.
-func NewAnnotation(key string, hash HashType, host string, tag string, kind AnnotationType, satisfied bool) Annotation {
+func NewAnnotation(key string, hash HashType, host string, tag string, layer AnnotationLayer, kind AnnotationType, satisfied bool) Annotation {
 	return Annotation{
 		Id:          NewULID(),
 		Key:         key,
 		Hash:        hash,
 		Host:        host,
 		Tag:         tag,
+		Layer:       string(layer),
 		Kind:        kind,
 		IsSatisfied: satisfied,
 		Timestamp:   time.Now(),

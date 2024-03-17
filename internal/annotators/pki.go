@@ -57,7 +57,7 @@ func (a *PkiAnnotator) Do(ctx context.Context, data []byte) (contracts.Annotatio
 	if err != nil {
 		return contracts.Annotation{}, err
 	}
-	annotation := contracts.NewAnnotation(string(key), a.hash, hostname, tag, a.kind, ok)
+	annotation := contracts.NewAnnotation(string(key), a.hash, hostname, tag, contracts.AnnotationPKIHttpLayer, a.kind, ok)
 	signed, err := SignAnnotation(a.sign.PrivateKey, annotation)
 	if err != nil {
 		return contracts.Annotation{}, err

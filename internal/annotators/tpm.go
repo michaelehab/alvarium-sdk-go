@@ -57,7 +57,7 @@ func (a *TpmAnnotator) Do(ctx context.Context, data []byte) (contracts.Annotatio
 		}
 	}
 
-	annotation := contracts.NewAnnotation(key, a.hash, hostname, tag, a.kind, isSatisfied)
+	annotation := contracts.NewAnnotation(key, a.hash, hostname, tag, contracts.AnnotationTPMLayer, a.kind, isSatisfied)
 	sig, err := SignAnnotation(a.sign.PrivateKey, annotation)
 	if err != nil {
 		return contracts.Annotation{}, err
