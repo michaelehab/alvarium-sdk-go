@@ -82,26 +82,6 @@ func (t AnnotationType) Validate() bool {
 	}
 }
 
-type StackLayer string
-
-const (
-	ApplicationLayer StackLayer = "app"
-	CiCdLayer        StackLayer = "cicd"
-)
-
-type AnnotationLayer string
-
-const (
-	AnnotationPKILayer           AnnotationLayer = AnnotationLayer(ApplicationLayer)
-	AnnotationPKIHttpLayer       AnnotationLayer = AnnotationLayer(ApplicationLayer)
-	AnnotationSourceLayer        AnnotationLayer = AnnotationLayer(ApplicationLayer)
-	AnnotationTLSLayer           AnnotationLayer = AnnotationLayer(ApplicationLayer)
-	AnnotationTPMLayer           AnnotationLayer = AnnotationLayer(ApplicationLayer)
-	AnnotationSourceCodeLayer    AnnotationLayer = AnnotationLayer(CiCdLayer)
-	AnnotationChecksumLayer      AnnotationLayer = AnnotationLayer(CiCdLayer)
-	AnnotationVulnerabilityLayer AnnotationLayer = AnnotationLayer(CiCdLayer)
-)
-
 type DerivedComponent string
 
 const (
