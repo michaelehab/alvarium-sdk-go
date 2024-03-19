@@ -63,6 +63,8 @@ func (a *Annotation) UnmarshalJSON(data []byte) (err error) {
 		Key         string
 		Hash        HashType
 		Host        string
+		Tag         string
+		Layer       string
 		Kind        AnnotationType
 		Signature   string
 		IsSatisfied bool
@@ -86,6 +88,8 @@ func (a *Annotation) UnmarshalJSON(data []byte) (err error) {
 	a.Key = x.Key
 	a.Hash = x.Hash
 	a.Host = x.Host
+	a.Tag = x.Tag
+	a.Layer = x.Layer
 	a.Kind = x.Kind
 	a.Signature = x.Signature
 	a.IsSatisfied = x.IsSatisfied
