@@ -50,10 +50,10 @@ func (s *SdkInfo) UnmarshalJSON(data []byte) (err error) {
 				return fmt.Errorf("invalid AnnotationType received %s", x)
 			}
 		}
-	}
 
-	if !a.StackLayer.Validate() {
-		return fmt.Errorf("invalid Stack Layer received %s", string(a.StackLayer))
+		if !a.StackLayer.Validate() {
+			return fmt.Errorf("invalid Stack Layer received %s", a.StackLayer)
+		}
 	}
 
 	*s = SdkInfo(*a)
