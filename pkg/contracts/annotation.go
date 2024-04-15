@@ -47,14 +47,66 @@ type AnnotationList struct {
 	Items []Annotation `json:"items,omitempty"` // Items contains 0-many annotations
 }
 
-// getTagValue retrieves the value associated with the tag field for a given layer.
-func getTagValue(layer LayerType) string {
+// Define a type for the getTagValue function
+type TagValueGetter func(LayerType) string
+
+// defaultGetTagValue retrieves the value associated with the tag field for a given layer.
+func defaultGetTagValue(layer LayerType) string {
 	switch layer {
 	case Application:
 		return os.Getenv(TagEnvKey)
 	}
 	return ""
 }
+
+// Global variable for the current tag value getter function
+var CurrentTagValueGetter TagValueGetter = defaultGetTagValue
+
+func SetCurrentTagValueGetter(getTag TagValueGetter) {
+	CurrentTagValueGetter = getTag
+}
+
+// Wrapper function that uses TagValueGetter or falls back to default logic
+func GetTagValue(layer LayerType) string {
+	// Attempt to use the CurrentTagValueGetter first
+	tagValue := CurrentTagValueGetter(layer)
+	if tagValue != "" {
+		return tagValue
+	}
+
+	// Fallback to default logic if CurrentTagValueGetter returned an empty string
+	return defaultGetTagValue(layer)
+}
+
+/*
+The way I see it is providing a way to override tag value logic for specific layers as needed.
+This gives the opportunity to use custom logic or even closures that maintain states.
+This is especially beneficial for tag values that are expensive to compute or retrieve and need to be fetched only once.
+
+func CustomTagValueGetter() TagValueGetter {
+	var cache = make(map[LayerType]string)
+
+	return func(layer LayerType) string {
+		switch layer {
+		case SPECIFIC_LAYER:
+			if val, ok := cache[layer]; ok {
+				// Return the cached value if available
+				return val
+			} else {
+				// Fetch and cache the value if not already in cache
+				val := // Logic to get the tag value
+				cache[layer] = val
+				return val
+			}
+		}
+	}
+}
+
+When the global variable for the current tag value getter function is changed to the custom one, it'll override the logic for certain layers.
+But for other layers where tag value is simple to get like "os" or "app" layers, it'll use the default provided logic.
+
+SetCurrentTagValueGetter(CustomTagValueGetter)
+*/
 
 // NewAnnotation is the constructor for an Annotation instance.
 func NewAnnotation(key string, hash HashType, host string, layer LayerType, kind AnnotationType, satisfied bool) Annotation {
@@ -63,7 +115,7 @@ func NewAnnotation(key string, hash HashType, host string, layer LayerType, kind
 		Key:         key,
 		Hash:        hash,
 		Host:        host,
-		Tag:         getTagValue(layer),
+		Tag:         GetTagValue(layer),
 		Layer:       layer,
 		Kind:        kind,
 		IsSatisfied: satisfied,
