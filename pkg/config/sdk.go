@@ -24,11 +24,12 @@ import (
 )
 
 type SdkInfo struct {
-	Annotators []contracts.AnnotationType `json:"annotators,omitempty" yaml:"annotators"`
-	Hash       HashInfo                   `json:"hash,omitempty" yaml:"hash"`
-	Signature  SignatureInfo              `json:"signature,omitempty" yaml:"signature"`
-	Stream     StreamInfo                 `json:"stream,omitempty" yaml:"stream"`
-	Layer      contracts.LayerType        `json:"layer,omitempty" yaml:"layer"`
+	Annotators       []contracts.AnnotationType `json:"annotators,omitempty" yaml:"annotators"`
+	CustomAnnotators []contracts.AnnotationType `json:"customAnnotators,omitempty" yaml:"customAnnotators"`
+	Hash             HashInfo                   `json:"hash,omitempty" yaml:"hash"`
+	Signature        SignatureInfo              `json:"signature,omitempty" yaml:"signature"`
+	Stream           StreamInfo                 `json:"stream,omitempty" yaml:"stream"`
+	Layer            contracts.LayerType        `json:"layer,omitempty" yaml:"layer"`
 }
 
 type LoggingInfo struct {

@@ -1,6 +1,9 @@
 annotators:
   - tpm
   - pki
+customAnnotators:
+  - customAnnotator1
+  - customAnnotator2
 layer: app
 hash:
   type: "sha256"
